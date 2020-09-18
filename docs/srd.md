@@ -167,4 +167,37 @@ Chat {
 * number of moves in shortest game
 * number of moves in longest game
 
-
+# Psuedo Code
+board.js
+```js
+let Board = {
+  board: [],
+  
+  options: {
+    rows: 10,
+    cols: 10
+  },
+  
+  row_names: ['A','B','C','D','E','F','G','H','I','J','K','L','M'
+    ,'N','O','P','Q','R','S','T','U','V','W','X','Y','Z],
+  
+  setup(options = {}) {   
+    for(let index in options) {
+      if(this.options[index] !== undefined) {
+        this.options[index] = options[index];
+    }
+    
+    for(let r = 0; r < this.options.rows; r++) {
+      let letter = this.row_names[r];
+      if(this.board[r] === undefined) {
+        this.board[r] = [];
+      }
+      for(let c = 0; r < this.options.columns; c++) {
+        let number = c + 1;
+        this.board[letter][number] = Object.create(Tile).init(letter, number, this.options);
+      }
+    }
+    return this;
+  }
+}
+``
