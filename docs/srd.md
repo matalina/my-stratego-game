@@ -31,3 +31,10 @@ Pieces
 | Scout      | 9 | 8 | move any number of spaces in straight light without jumping |
 | Spy        | S | 1 | defeats marshal if attacking |
 | Flag       | F | 1 | cannot move, if captured loses game |
+
+One move per turn.   
+All pieces move 1 space vertically or horizontally at a time unless otherwise stated.  
+Cannot move back and forth between two spaces more than three times  
+Pieces may not share the same space.
+On attack: Lower # wins. If the attacker wins they take the square  
+Capturing the opponent flag wins the game  
