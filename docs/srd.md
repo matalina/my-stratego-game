@@ -41,6 +41,8 @@ Capturing the opponent flag wins the game
 
 ## Objects
 
+Player - use default JetStream object/database  
+
 Basic Game
 ```
 class Game {
@@ -49,8 +51,6 @@ class Game {
   Player blue_player;
   Tray red_tray;
   Tray blue_tray;
-  Log game_log;
-  Chat chat_log;
   
   function start();
   function pause();
@@ -84,9 +84,87 @@ class Tile {
 }
 ``` 
 
-Tray (x2)  
-Pieces (40 x2)  
-Player (x2)  
-Stats  
-Logs  
-Move  
+Pieces Basics
+```
+class Piece {
+  integer id;
+  string color; // red or blue
+  integer type_id; // type of Piece
+  
+  function moveTo(tile_id);
+  function attack(piece_id);
+  function die();
+}
+
+class PieceType {
+  integer id;
+  string name;
+  string abbr;
+  string icon;
+  
+  integer rank; // 0 = Bomb, 1-9, 10 = spy, 99 = flag
+  
+  boolean move_many; // defaults false (except Scout/9)
+  boolean can_move; // defaults true (except flag/F/99 and bomb/B/0)
+  boolean take_rank_1; // defaults to false (except spy/S/10)
+  boolean difuse_bomb; // defaults to false (except miner/8)
+  boolean win_game; // defaults to false (except flat/F/99)
+}
+
+class Tray {
+  string color;
+  array pieces;
+  
+  function setup();
+  function placePieceOn(piece_id, tile_id);
+  function takePieceFrom(piece_id, tile_id);
+  function stats(); // displays number of peices total and per piece
+}
+```
+
+Basic Log Entries
+```
+Game {
+  integer id;
+  datetime created_at;
+  integer red_player; // player_id
+  integer blue_player; // player_id
+  json board; // description of board and tiles
+  json pieces; // description of peices
+}
+
+Move {
+  integer id;
+  integer game_id;
+  integer player_id;
+  datetime moved_at;
+  integer piece_moved; // piece_id
+  integer moved_from; // tile_id
+  interger moved_to; // tile_id
+  boolean attacked; 
+  boolean win; // null if attacked is false
+  integer against_peice; // piece_id null if attacked is false
+}
+
+Chat {
+  integer id;
+  integer player_id;
+  integer game_id;
+  datetime said_at;
+  text message;
+}
+```
+
+### Stats to calculate
+
+* number of wins
+* number of loses
+* number of draws
+* number of bombs hit
+* number of bombes difused
+* number of times captured a marshal
+* number of times your marshal was captured
+* number of moves in shortest game
+* number of moves in longest game
+
+
