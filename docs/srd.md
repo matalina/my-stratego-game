@@ -3,18 +3,18 @@
 2 players  
 10x10 board with 2 2x2 areas in the center creating choke points
 
-|   | A | B | C | D | E | F | G | H | I | J |
+|   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 0 |   |   |   |   |   |   |   |   |   |   |
-| 1 |   |   |   |   |   |   |   |   |   |   |
-| 2 |   |   |   |   |   |   |   |   |   |   |
-| 3 |   |   |   |   |   |   |   |   |   |   |
-| 4 |   |   | X | X |   |   | X | X |   |   |
-| 5 |   |   | X | X |   |   | X | X |   |   |
-| 6 |   |   |   |   |   |   |   |   |   |   |
-| 7 |   |   |   |   |   |   |   |   |   |   |
-| 8 |   |   |   |   |   |   |   |   |   |   |
-| 9 |   |   |   |   |   |   |   |   |   |   |
+| A |   |   |   |   |   |   |   |   |   |   |
+| B |   |   |   |   |   |   |   |   |   |   |
+| C |   |   |   |   |   |   |   |   |   |   |
+| D |   |   |   |   |   |   |   |   |   |   |
+| E |   |   | X | X |   |   | X | X |   |   |
+| F |   |   | X | X |   |   | X | X |   |   |
+| G |   |   |   |   |   |   |   |   |   |   |
+| H |   |   |   |   |   |   |   |   |   |   |
+| I |   |   |   |   |   |   |   |   |   |   |
+| J |   |   |   |   |   |   |   |   |   |   |
 
 Pieces
 | Name       | R | # | Exceptions |
@@ -41,12 +41,52 @@ Capturing the opponent flag wins the game
 
 ## Objects
 
-Board
-Spaces (100)
-Tray (x2)
-Pieces (40 x2)
+Basic Game
+```
+class Game {
+  Board board; 
+  Player red_player;
+  Player blue_player;
+  Tray red_tray;
+  Tray blue_tray;
+  Log game_log;
+  Chat chat_log;
+  
+  function start();
+  function pause();
+  function withdraw();
+}
+```
 
-Player (x2)
-Stats
-Logs
-Move
+Game Board
+```
+class Board {
+  Array board; // 10x10 array of Tiles
+  
+  function setup();
+}
+
+class Tile {
+  integer id;
+  string name; // A0 - J9
+  string col;
+  string row;
+  
+  string image; //
+  
+  Array directions; // [u, r, d, l] tile_ids
+  Piece piece; // null if empty;
+  
+  function canMove(tile_id);
+  function isEmpty(); // is the tile empty? (return false or Piece)
+  function clear();
+  function hold(piece);
+}
+``` 
+
+Tray (x2)  
+Pieces (40 x2)  
+Player (x2)  
+Stats  
+Logs  
+Move  
