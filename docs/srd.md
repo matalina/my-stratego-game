@@ -4,6 +4,8 @@
 10x10 board with 2 2x2 areas in the center creating choke points
 
 |   |   |   |   |   |   |   |   |   |   |
+|---|---|---|---|---|---|---|---|---|---|
+|   |   |   |   |   |   |   |   |   |   |
 |   |   |   |   |   |   |   |   |   |   |
 |   |   |   |   |   |   |   |   |   |   |
 |   |   |   |   |   |   |   |   |   |   |
@@ -17,7 +19,7 @@
 
 Pieces
 | Name       | R | # | Exceptions |
-|============|===|===|============|
+|------------|---|---|------------|
 | Bomb       | B | 6 | cannot move, caputurable by Miner |
 | Marshal    | 1 | 1 | can be captured by attacking spy |
 | General    | 2 | 1 |  |
