@@ -38,3 +38,15 @@ Cannot move back and forth between two spaces more than three times
 Pieces may not share the same space.
 On attack: Lower # wins. If the attacker wins they take the square  
 Capturing the opponent flag wins the game  
+
+## Objects
+
+Board
+Spaces (100)
+Tray (x2)
+Pieces (40 x2)
+
+Player (x2)
+Stats
+Logs
+Move
