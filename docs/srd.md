@@ -194,10 +194,10 @@ let Board = {
       }
       for(let c = 0; r < this.options.columns; c++) {
         let number = c + 1;
-        this.board[letter][number] = Object.create(Tile).init(letter, number, this.options);
+        this.board[letter][number] = (Object.create(Tile)).init(letter, number, this.options);
       }
     }
     return this;
   }
 }
-``
+```
