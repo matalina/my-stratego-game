@@ -74,7 +74,7 @@ class Tile {
   
   string image; //
   
-  Array directions; // [u, r, d, l] tile_ids
+  Array directions; // [u, r, d, l] boolean
   Piece piece; // null if empty;
   
   function canMove(tile_id);
@@ -167,7 +167,20 @@ Chat {
 * number of moves in shortest game
 * number of moves in longest game
 
-# Psuedo Code
+# Code Notes
+constants.js
+```
+const ROW_NAMES = ['A','B','C','D','E','F','G','H','I','J','K','L','M'
+    ,'N','O','P','Q','R','S','T','U','V','W','X','Y','Z],
+    
+const BLOCKS = ['E2','E3','F2','F3','E6','E7','F6','F7'];
+
+function isInBlocks(row, col) {
+  let name = `${ROW_NAMES[row]}${col}`;
+  
+  return BLOCKS.includes(name);
+}
+```
 board.js
 ```js
 let Board = {
@@ -177,10 +190,7 @@ let Board = {
     rows: 10,
     cols: 10
   },
-  
-  row_names: ['A','B','C','D','E','F','G','H','I','J','K','L','M'
-    ,'N','O','P','Q','R','S','T','U','V','W','X','Y','Z],
-  
+   
   setup(options = {}) {   
     for(let index in options) {
       if(this.options[index] !== undefined) {
@@ -188,16 +198,80 @@ let Board = {
     }
     
     for(let r = 0; r < this.options.rows; r++) {
-      let letter = this.row_names[r];
+      let letter = ROW_NAMES[r];
       if(this.board[r] === undefined) {
         this.board[r] = [];
       }
       for(let c = 0; r < this.options.columns; c++) {
         let number = c + 1;
-        this.board[letter][number] = Object.create(Tile).init(letter, number, this.options);
+        this.board[letter][number] = Object.create(Tile).init(r, c, this.options);
       }
     }
     return this;
   }
+}
+```
+tile.js
+```
+let Tile = {
+  name: '',
+  col: '',
+  row: '',
+  image: '',
+  directions: [null, null, null, null], // [t, r, b, l]
+  piece: null,
+  
+  funtion init(row, col, board_options) {
+    this.col = col;
+    this.row = row;
+    this.name = `${ROW_NAMES[row]}${col}`;
+    
+    if(row === 0 && col === 0) {
+      this.image = 'tl_corner';
+      this.directions = [false, true, true, false];
+    }
+    else if(row === 0 && (col > 0 && col < board_options.col)) {
+      this.image = 't_middle';
+      this.directions = [false, true, true, true];
+    }
+    else if(row === 0 && col === board_options.col - 1) {
+      this.image = 'tr_corner';
+      this.directions = [false,false, true, true];
+    }
+    else if(col > 0 && row != board_options.row - 1) {
+      this.image = 'l_middle';
+      this.directions = [true,true,true,false];
+    }
+    else if(col === board_options.col - 1 && row != board_options.row - 1) {
+      this.image = 'r_middle';
+      this.directions = [false,true,true,true];
+    }
+    else if(row === board_options.row - 1 && col === 0) {
+      this.image = 'bl_corner';
+      this.directions = [true, true, false, false];
+    }
+    else if(row === board_options.row - 1 && col === board.options.col - 1) {
+      this.image = 'br_corner';
+      this.directions = [true, false, false,true];
+    }
+    else if(row === board_options.row - 1 && (col > 0 && col < board_options.col)) {
+      this.image = 'b_middle';
+      this.directions = [true, true, false, true];
+    }
+    else if(isInBlock(row,col)) {
+      this.image = 'block';
+      this.directions = [false,false,false,false];
+    }
+    else {
+      this.image = 'center';
+      this.directions = [true,true,true,true];
+    }
+    
+  }
+  
+  function canMove(tile_id){},
+  function isEmpty(){},
+  function clear(){},
+  function hold(piece){},
 }
 ```
